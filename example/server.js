@@ -32,7 +32,8 @@ server.register([
     register: require('../'),
     options: {
       pages: {
-        one: 'trunk-path-one'
+        one: 'trunk-path-one',
+        two: 'trunk-path-two'
       }
     }
   }
