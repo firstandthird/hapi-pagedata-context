@@ -1,0 +1,32 @@
+{
+  "name": "hapi-pagedata-context",
+  "version": "0.0.1",
+  "description": "Plugin to push pagedata objects to view context",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firstandthird/hapi-pagedata-context.git"
+  },
+  "author": "First And Third",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/firstandthird/hapi-pagedata-context/issues"
+  },
+  "homepage": "https://github.com/firstandthird/hapi-pagedata-context#readme",
+  "devDependencies": {
+    "eslint": "^3.9.1",
+    "eslint-config-firstandthird": "^3.2.0",
+    "eslint-plugin-import": "^2.1.0",
+    "hapi": "^16.5.2",
+    "hapi-pagedata": "^1.1.1",
+    "vision": "^4.1.1",
+    "vision-nunjucks": "^2.1.0"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "lodash": "^4.17.4"
+  }
+}
