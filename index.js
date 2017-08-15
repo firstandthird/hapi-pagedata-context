@@ -1,17 +1,12 @@
 const pkg = require('./package.json');
 const async = require('async');
 const _ = require('lodash');
+const Boom = require('boom');
 
 exports.register = function(server, options, next) {
-  // Check Dependency
-  if (!server.plugins['hapi-pagedata']) {
-    server.log('required dependency missing');
-    return next();
-  }
-
-  if (!options.slugs || options.slugs.length === 0) {
-    server.log(['error', 'hapi-pagedata-context'], 'no slugs passed to context');
-    return next();
+  if (!options.pages) {
+    server.log(['hapi-pagedata-context', 'error'], 'no pages passed to context');
+    return next('No pages passed to context');
   }
   
   const contextHandler = (request, reply) => {
@@ -22,20 +17,24 @@ exports.register = function(server, options, next) {
     const response = request.response;
     
     response.source.context = response.source.context ? response.source.context : {};
-    async.each(options.slugs, (slug, cb) => {
+    async.each(Object.keys(options.pages), (key, cb) => {
+      const slug = options.pages[key];
       server.methods.pagedata.getPageContent(slug, (err, content) => {
         if (err) {
-          server.log(['error', 'get-page', 'hapi-pagedata-context'], err);
+          server.log(['hapi-pagedata-context', 'error', 'get-page'], err);
           return cb();
         }
-        
-        response.source.context = _.defaults(response.source.context, content);
+        const respObj = {};
+        respObj[key] = content;
+        response.source.context = _.defaults(response.source.context, respObj);
         cb();
       });
     }, err => {
       if (err) {
         throw err;
       }
+
+      console.log(response.source.context);
       
       reply.continue();
     }); 
@@ -48,5 +47,6 @@ exports.register = function(server, options, next) {
 
 exports.register.attributes = {
   once: true,
-  pkg
+  pkg,
+  dependencies: 'hapi-pagedata'
 };

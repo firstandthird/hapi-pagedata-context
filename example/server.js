@@ -31,7 +31,9 @@ server.register([
   {
     register: require('../'),
     options: {
-      slugs: ['trunk-path-one']
+      pages: {
+        one: 'trunk-path-one'
+      }
     }
   }
 ], err => {
