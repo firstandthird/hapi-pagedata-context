@@ -31,7 +31,7 @@ exports.register = function(server, options, next) {
       });
     }, err => {
       if (err) {
-        reply(Boom.badImplementation(err));
+        return reply(Boom.badImplementation(err));
       }
 
       console.log(response.source.context);
